@@ -9,22 +9,29 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     
+    @IBOutlet weak var listView: UITableView!
+    
+    let restaurantNames = ["GEN", "Darda Seafood", "Kazoo", "True Food","Kabil", "Sultan Kebab", "California Wet Burrito"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
     }
     
     
+    // Mark Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return restaurantNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        cell?.textLabel?.text = "Cell"
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = restaurantNames[indexPath.row]
+        cell.imageView?.image = UIImage(named: restaurantNames[indexPath.row])
+        
+        return cell
     }
     
 
