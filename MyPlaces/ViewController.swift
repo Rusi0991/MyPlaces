@@ -27,18 +27,23 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = restaurantNames[indexPath.row]
-        cell.imageView?.image = UIImage(named: restaurantNames[indexPath.row])
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
+        cell.nameLabel.text = restaurantNames[indexPath.row]
+        cell.imageOfPlace.image = UIImage(named: restaurantNames[indexPath.row])
+        cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
+        cell.imageOfPlace.clipsToBounds = true
         
         return cell
     }
+    
     
     // Mark : -Table View Delegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
     }
+    
+    
     
 
     
