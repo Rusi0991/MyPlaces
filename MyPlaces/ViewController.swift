@@ -44,7 +44,9 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     }
     
     
-    
+    @IBAction func cancelAction(segue : UIStoryboardSegue){
+        
+    }
 
     
 
