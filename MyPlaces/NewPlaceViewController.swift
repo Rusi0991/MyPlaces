@@ -21,10 +21,10 @@ class NewPlaceViewController: UITableViewController {
             let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             let camera = UIAlertAction(title: "Camera", style: .default) { _ in
-                // chooseImagePicker
+                self.chooseimagePicker(source: .camera)
             }
             let photo = UIAlertAction(title: "Photo", style: .default) { _ in
-                // chooseImagePicker
+                self.chooseimagePicker(source: .photoLibrary)
             }
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -45,6 +45,19 @@ extension NewPlaceViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+// MARK: Work with image
+
+extension NewPlaceViewController{
+    func chooseimagePicker(source : UIImagePickerController.SourceType){
+        if UIImagePickerController.isSourceTypeAvailable(source){
+            let imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = source
+            present(imagePicker, animated: true)
+        }
     }
 }
 
