@@ -8,10 +8,24 @@
 import UIKit
 
 class NewPlaceViewController: UITableViewController {
+    
+    var newPlace : Place?
 
-    @IBOutlet weak var imageOfPlace: UIImageView!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var placeImage: UIImageView!
+    
+    @IBOutlet weak var placeName: UITextField!
+    
+    @IBOutlet weak var placeLocation: UITextField!
+    
+    @IBOutlet weak var placeType: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.saveButton.isEnabled = false
+        
+        placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
     }
     
@@ -20,6 +34,8 @@ class NewPlaceViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
             
+            
+//            #imageLiteral() to add below image
             let cameraIcon = #imageLiteral(resourceName: "camera")
             let photoIcon = #imageLiteral(resourceName: "photo")
             
@@ -29,13 +45,13 @@ class NewPlaceViewController: UITableViewController {
                 self.chooseimagePicker(source: .camera)
             }
             camera.setValue(cameraIcon, forKey: "image")
-//            camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlingnment")
+            camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
             let photo = UIAlertAction(title: "Photo", style: .default) { _ in
                 self.chooseimagePicker(source: .photoLibrary)
             }
             photo.setValue(photoIcon, forKey: "image")
-//            photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+            photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel)
             
@@ -48,6 +64,15 @@ class NewPlaceViewController: UITableViewController {
             view.endEditing(true)
         }
     }
+    
+    func saveNewPlace(){
+        newPlace = Place(name: placeName.text!, location: placeLocation.text, type: placeType.text, image: placeImage.image, restaurantImages: nil)
+    }
+    
+    @IBAction func canceAction(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
 }
 // MARK:  Text Field Delegate
 
@@ -55,6 +80,16 @@ extension NewPlaceViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    
+    @objc private func textFieldChanged(){
+        
+        if placeName.text?.isEmpty == false {
+            saveButton.isEnabled = true
+        } else {
+            saveButton.isEnabled = false
+        }
     }
 }
 
@@ -72,9 +107,9 @@ extension NewPlaceViewController : UIImagePickerControllerDelegate, UINavigation
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imageOfPlace.image = info[.editedImage] as? UIImage
-        imageOfPlace.contentMode = .scaleAspectFill
-        imageOfPlace.clipsToBounds = true
+        placeImage.image = info[.editedImage] as? UIImage
+        placeImage.contentMode = .scaleAspectFill
+        placeImage.clipsToBounds = true
         dismiss(animated: true)
     }
 }

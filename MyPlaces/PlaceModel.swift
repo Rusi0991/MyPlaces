@@ -5,11 +5,13 @@
 //  Created by Ruslan Ismayilov on 7/12/22.
 //
 
-import Foundation
+
+import UIKit
 
 struct Place {
     var name:  String
-    var location : String
-    var type : String
-    var image : String
+    var location : String?
+    var type : String?
+    var image : UIImage?
+    var restaurantImages : String?
 }
